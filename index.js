@@ -40,7 +40,7 @@ async function write(content, tagColor, bgTagColor, tag, error = false) {
 
 module.exports = { error, serveur, logs, client, sql };
 function appendToFile(content, nameFile) {
-    dotenv.config();
+    dotenv.config({debug: false, quiet: true});
     if (!process.env.DEBUG || process.env.DEBUG !== "true") return;
     if (!nameFile) {
         const today = new Date();
