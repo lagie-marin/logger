@@ -32,22 +32,23 @@ error('Une erreur grave !');
 serveur('Serveur démarré');
 logs('Message générique');
 client('Connexion client');
+logs('c,zo', my_var, another_var);
 sql('users', 'SELECT * FROM users;');
 ```
 
 ## API
 
-### error(content: string): Promise<void>
-Log une erreur avec un tag rouge et écrit dans le fichier si DEBUG=true.
+### error(...content: unknown[]): Promise<void>
+Log une erreur avec un tag rouge et écrit dans le fichier si DEBUG=true. Les arguments sont formatés comme `console.log`.
 
-### serveur(content: string): Promise<void>
-Log un message serveur avec un tag bleu et écrit dans le fichier si DEBUG=true.
+### serveur(...content: unknown[]): Promise<void>
+Log un message serveur avec un tag bleu et écrit dans le fichier si DEBUG=true. Les arguments sont formatés comme `console.log`.
 
-### logs(content: string): Promise<void>
-Log un message générique avec un tag blanc et écrit dans le fichier si DEBUG=true.
+### logs(...content: unknown[]): Promise<void>
+Log un message générique avec un tag blanc et écrit dans le fichier si DEBUG=true. Les arguments sont formatés comme `console.log`.
 
-### client(content: string): Promise<void>
-Log un message client avec un tag vert et écrit dans le fichier si DEBUG=true.
+### client(...content: unknown[]): Promise<void>
+Log un message client avec un tag vert et écrit dans le fichier si DEBUG=true. Les arguments sont formatés comme `console.log`.
 
 ### sql(table_name: string, content: string): void
 Ajoute une ligne dans un fichier SQL spécifique.

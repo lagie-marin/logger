@@ -1,22 +1,23 @@
 const fs = require('fs');
 const dayjs = require("dayjs");
 const dotenv = require("dotenv");
+const { format: utilFormat } = require('util');
 const format = "{tstamp} {tag} {txt}\n";
 const path = require('path');
 
-async function error(content) {
+async function error(...content) {
     await write(content, "black", "bgRed", "ERROR", true);
 }
 
-async function serveur(content) {
+async function serveur(...content) {
     await write(content, "black", "bgBlue", "SERVER", false);
 }
 
-async function logs(content) {
+async function logs(...content) {
     await write(content, "black", "bgWhite", "LOG", false);
 }
 
-async function client(content) {
+async function client(...content) {
     await write(content, "black", "bgGreen", "CLIENT", false);
 }
 
@@ -29,11 +30,12 @@ async function write(content, tagColor, bgTagColor, tag, error = false) {
     const timestamp = `[${dayjs().format("DD/MM - HH:mm:ss")}]`;
     const logTag = `[${tag}]`;
     const stream = error ? process.stderr : process.stdout;
+    const message = utilFormat(...content);
 
     const item = format
-        .replace("tstamp", chalk.gray(timestamp))
+        .replace("{tstamp}", chalk.gray(timestamp))
         .replace("{tag}", chalk[bgTagColor][tagColor](logTag))
-        .replace("{txt}", chalk.white(content));
+        .replace("{txt}", chalk.white(message));
     appendToFile(item);
     stream.write(item);
 }
@@ -49,7 +51,8 @@ function appendToFile(content, nameFile) {
         const dd = String(today.getDate()).padStart(2, '0');
         nameFile = `logs-${yyyy}-${mm}-${dd}.txt`;
     }
-    const filePath = `${process.env.LOGS}/${nameFile}`;
+    const filePath = `${process.env.LOGS ? process.env.LOGS : './logs'}/${nameFile}`;
+
     if (!content) {
         console.error('Le contenu est vide ou non défini.');
         return;

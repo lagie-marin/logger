@@ -1,6 +1,6 @@
 {
   "name": "@mlagie/logger",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Logger permet d'afficher des messages colorés en console et d'écrire les logs dans des fichiers, selon l'environnement.",
   "main": "index.js",
   "scripts": {
